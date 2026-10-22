@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>首頁｜古希臘羅馬宗教史</title>
-<meta name="description" content="115-1 古希臘羅馬宗教史課程筆記 v3：色諾芬《遠征記》中的神意與獻祭、泛希臘宗教系統、神話譜系與神話版本、奧林匹斯十二主神、史料方法與年代座標，以及宗教聖地、祭壇、神廟與倒酒，附互動測驗與模擬申論題。">
+<meta name="description" content="115-1 古希臘羅馬宗教史課程筆記 v4：色諾芬《遠征記》中的神意與獻祭、泛希臘宗教系統、神話譜系與神話版本、奧林匹斯十二主神、史料方法與年代座標，以及宗教聖地、祭壇、神廟與倒酒，附互動測驗與模擬申論題。">
 <meta name="theme-color" content="#EDEEE7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,7 @@
   --border:1px solid var(--rule);
   --dash:1px dashed var(--rule);
 }
-@media (max-width:760px){ :root{ --tabs-h:52px; } }
+/* v4：分頁改為右上角下拉選單，不再有第二列分頁列 */
 
 *,*::before,*::after{ box-sizing:border-box; }
 html{
@@ -96,38 +96,51 @@ ruby rt{ font-size:.5em; color:var(--ink2); font-family:var(--song); font-weight
   text-decoration:none; white-space:nowrap; display:inline-flex; align-items:center; min-height:44px;
 }
 .brand:hover{ color:var(--cin); }
-.tabs{ list-style:none; margin:0; padding:0; display:flex; gap:4px; }
+/* ---------- v4：右上角下拉選單 ---------- */
+.menu-wrap{ position:relative; display:flex; align-items:center; min-width:0; }
+.menu-btn{
+  display:inline-flex; align-items:center; gap:12px; min-height:44px; max-width:100%; padding:0 12px 0 14px;
+  background:transparent; color:var(--ink); border:1px solid transparent; border-radius:var(--radius);
+  font-family:var(--kai); font-size:16px; cursor:pointer; transition:background-color .18s, border-color .18s;
+}
+.menu-btn:hover{ background:var(--card); border-color:var(--rule); }
+.menu-btn[aria-expanded="true"]{ background:var(--card); border-color:var(--ink); }
+.menu-current{ display:inline-flex; align-items:baseline; gap:.4em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.menu-current .tn{ color:var(--cin); font-weight:700; }
+.menu-current .tn:empty{ display:none; }
+.burger{ position:relative; flex:0 0 22px; width:22px; height:16px; }
+.burger i{ position:absolute; left:0; right:0; height:2px; border-radius:2px; background:var(--ink); transition:transform .25s ease, opacity .2s ease, top .25s ease; }
+.burger i:nth-child(1){ top:0; } .burger i:nth-child(2){ top:7px; } .burger i:nth-child(3){ top:14px; }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(1){ top:7px; transform:rotate(45deg); }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(2){ opacity:0; }
+.menu-btn[aria-expanded="true"] .burger i:nth-child(3){ top:7px; transform:rotate(-45deg); }
+.menu-panel{
+  position:absolute; right:0; top:calc(100% + 8px); width:270px; z-index:75;
+  background:var(--card); border:1px solid var(--rule); border-radius:6px; box-shadow:var(--shadow); padding:8px;
+  transform-origin:top right; animation:menuIn .18s ease-out;
+}
+.menu-panel[hidden]{ display:none; }
+@keyframes menuIn{ from{ opacity:0; transform:translateY(-6px) scale(.98); } to{ opacity:1; transform:none; } }
+.menu-head{ font-family:var(--kai); font-size:13px; color:var(--ink2); letter-spacing:.08em; padding:4px 12px 6px; }
+.tabs{ list-style:none; margin:0; padding:0; display:grid; gap:2px; }
 .tabs li{ margin:0; }
+.tabs li.sep{ border-top:1px dashed var(--rule); margin-top:4px; padding-top:4px; }
 .tabs a{
-  position:relative; display:inline-flex; align-items:center; gap:.35em;
-  min-height:44px; padding:0 10px; font-family:var(--kai); font-size:16px;
-  color:var(--ink2); text-decoration:none; white-space:nowrap;
+  position:relative; display:grid; grid-template-columns:1.7em minmax(0,1fr); align-items:center;
+  min-height:44px; padding:0 12px; border-radius:4px;
+  font-family:var(--kai); font-size:17px; color:var(--ink2); text-decoration:none;
 }
 .tabs a .tn{ color:var(--cin); font-weight:700; }
-.tabs a:hover{ color:var(--ink); }
-.tabs a[aria-current="page"]{ color:var(--ink); font-weight:700; }
-.tabs a[aria-current="page"]::after{
-  content:""; position:absolute; left:10px; right:10px; bottom:6px; height:2px; background:var(--cin);
-}
-@media (max-width:1100px) and (min-width:761px){
-  .nav-row{ gap:12px; }
-  .tab-wrap{ min-width:0; overflow-x:auto; scrollbar-width:none; }
-  .tab-wrap::-webkit-scrollbar{ display:none; }
-  .tabs a{ padding:0 7px; font-size:15px; }
-  .brand{ font-size:18px; }
-}
+.tabs a:hover, .tabs a:focus-visible{ background:var(--paper2); color:var(--ink); }
+.tabs a[aria-current="page"]{ background:var(--paper); color:var(--ink); font-weight:700; }
+.tabs a[aria-current="page"]::before{ content:""; position:absolute; left:0; top:9px; bottom:9px; width:3px; border-radius:2px; background:var(--cin); }
 @media (max-width:760px){
-  .nav-row{ flex-wrap:wrap; gap:0; padding-inline:0; }
-  .brand{ padding-inline:var(--pad); height:var(--nav-h); }
-  .tab-wrap{ flex:0 0 100%; width:100%; min-width:0; border-top:1px solid var(--rule); }
-  .tabs{
-    width:100%; height:var(--tabs-h); overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory;
-    padding-inline:12px; scrollbar-width:none;
-  }
-  .tabs::-webkit-scrollbar{ display:none; }
-  .tabs li{ scroll-snap-align:start; flex:0 0 auto; }
-  .tabs a{ min-height:var(--tabs-h); min-width:44px; justify-content:center; padding:0 12px; }
-  .tabs a[aria-current="page"]::after{ bottom:4px; }
+  .nav-row{ gap:10px; }
+  .menu-panel{ position:fixed; left:12px; right:12px; width:auto; top:calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 6px); max-height:calc(100vh - var(--nav-h) - 24px); overflow-y:auto; }
+}
+@media (max-width:420px){
+  .brand{ font-size:17px; }
+  .menu-btn{ font-size:15px; gap:8px; padding:0 8px 0 10px; }
 }
 
 /* =========================================================
@@ -624,29 +637,79 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
 .review-nav a:hover{ background:var(--jade); color:#fff; }
 .topic-head .sub a{ color:var(--link); }
 .qtag.week{ background:var(--bronze-bg); color:var(--bronze-ink); border-color:rgba(138,106,53,.45); }
-.mcq-tools{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; background:var(--card); border:var(--border); border-radius:6px; padding:10px 14px; margin:0 0 14px; position:sticky; top:calc(var(--nav-h) + var(--tabs-h) + 6px); z-index:5; }
-.mcq-score{ font-family:var(--kai); font-size:17px; margin-right:auto; }
-.mcq-score b{ color:var(--cin); }
-.mcq-list{ list-style:none; margin:0; padding:0; display:grid; gap:12px; counter-reset:mcq; }
-.mcq{ counter-increment:mcq; background:var(--card); border:1px solid var(--rule); border-left:5px solid var(--slate); border-radius:5px; padding:12px 16px 10px; }
-.mcq.is-right{ border-left-color:var(--easy); }
-.mcq.is-wrong{ border-left-color:var(--hard); }
-.mcq-q{ font-size:16.5px; line-height:1.8; margin:0 0 8px; display:grid; grid-template-columns:auto minmax(0,1fr); gap:10px; }
-.mcq-q::before{ content:counter(mcq) "."; font-family:var(--kai); font-weight:700; color:var(--slate); }
-.mcq-opts{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:0 0 4px; }
-.mcq-opt{ font:inherit; font-size:15.5px; line-height:1.6; text-align:left; cursor:pointer; min-height:44px; padding:8px 12px; background:var(--paper); color:var(--ink); border:1px solid var(--rule); border-radius:4px; display:grid; grid-template-columns:auto minmax(0,1fr); gap:8px; align-items:start; }
-.mcq-opt:hover:not(:disabled){ border-color:var(--ink); }
-.mcq-opt .k{ font-family:var(--kai); font-weight:700; color:var(--ink2); }
+.mcq-tools{
+  display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:10px 12px;
+  background:var(--card); border:var(--border); border-radius:6px; padding:12px 14px; margin:0 0 16px;
+  position:sticky; top:calc(var(--nav-h) + var(--tabs-h) + 6px); z-index:5; box-shadow:0 4px 14px rgba(31,36,34,.08);
+}
+.mcq-score{ font-family:var(--kai); font-size:17px; }
+.mcq-score b.r{ color:var(--easy-ink); } .mcq-score b.w{ color:var(--hard-ink); }
+.mcq-bar{ grid-column:1 / -1; display:flex; height:10px; border-radius:999px; background:var(--paper2); overflow:hidden; }
+.mcq-bar i{ display:block; height:100%; width:0; transition:width .4s ease; }
+.mcq-bar .b-right{ background:var(--easy); }
+.mcq-bar .b-wrong{ background:var(--hard); }
+.mcq-legend{ grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:4px 16px; font-size:13px; color:var(--ink2); }
+.mcq-legend span{ display:inline-flex; align-items:center; gap:6px; }
+.mcq-legend i{ display:inline-block; width:12px; height:12px; border-radius:3px; background:var(--c); }
+.mcq-list{ list-style:none; margin:0; padding:0; display:grid; gap:14px; }
+.mcq{
+  --tc:var(--slate); --tb:var(--slate-bg); --ti:var(--slate);
+  background:var(--card); border:1px solid var(--rule); border-left:6px solid var(--tc); border-radius:6px; overflow:hidden;
+}
+.mcq.t-t6{ --tc:var(--bronze); --tb:var(--bronze-bg); --ti:var(--bronze-ink); }
+.mcq-head{ display:flex; align-items:center; gap:10px; padding:8px 14px; background:var(--tb); border-bottom:1px solid var(--rule); }
+.mcq-no{ flex:0 0 30px; width:30px; height:30px; border-radius:50%; background:var(--tc); color:#fff; font-family:var(--kai); font-weight:700; font-size:15px; display:flex; align-items:center; justify-content:center; }
+.mcq-topic{ font-family:var(--kai); font-size:13px; line-height:1.8; color:var(--ti); background:var(--card); border:1px solid var(--tc); border-radius:3px; padding:0 8px; }
+.mcq-status{ margin-left:auto; font-family:var(--kai); font-size:13.5px; font-weight:700; line-height:1.9; padding:0 12px; border-radius:999px; color:#fff; }
+.mcq-status[hidden]{ display:none; }
+.mcq.is-right .mcq-status{ background:var(--easy); }
+.mcq.is-wrong .mcq-status{ background:var(--hard); animation:statusPop .45s cubic-bezier(.3,1.6,.5,1) both; }
+.mcq-q{ font-size:16.5px; line-height:1.8; margin:12px 16px 10px; }
+.mcq-opts{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:0 16px 14px; }
+.mcq-opt{
+  position:relative; font:inherit; font-size:15.5px; line-height:1.6; text-align:left; cursor:pointer; min-height:46px; padding:8px 12px;
+  background:var(--paper); color:var(--ink); border:1.5px solid var(--rule); border-radius:5px;
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:10px; align-items:center;
+  transition:border-color .15s, background-color .15s, opacity .25s, transform .15s;
+}
+.mcq-opt .k{ width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--kai); font-weight:700; font-size:14px; color:var(--ti); background:var(--tb); border:1px solid var(--tc); }
+.mcq-opt .tag{ font-family:var(--kai); font-size:12.5px; font-weight:700; line-height:1.8; padding:0 8px; border-radius:3px; color:#fff; }
+.mcq-opt .tag:empty{ display:none; }
+.mcq-opt:hover:not(:disabled){ border-color:var(--tc); background:var(--tb); transform:translateY(-1px); }
 .mcq-opt:disabled{ cursor:default; }
-.mcq-opt.right{ background:var(--easy-bg); border-color:var(--easy); color:var(--easy-ink); font-weight:700; }
-.mcq-opt.wrong{ background:var(--hard-bg); border-color:var(--hard); color:var(--hard-ink); text-decoration:line-through; }
-.mcq-fb{ font-size:15px; line-height:1.8; margin:8px 0 2px; padding:8px 12px; background:var(--paper); border-radius:4px; }
+.mcq-opt.dim{ opacity:.5; }
+.mcq-opt.right{ background:var(--easy-bg); border:2px solid var(--easy); color:var(--easy-ink); font-weight:700; opacity:1; }
+.mcq-opt.right .k{ background:var(--easy); border-color:var(--easy); color:#fff; }
+.mcq-opt.right .tag{ background:var(--easy); }
+.mcq.is-right .mcq-opt.right{ animation:rightPop .4s cubic-bezier(.3,1.6,.5,1); }
+.mcq.is-wrong .mcq-opt.right{ animation:rightGlow 1.6s ease-out .55s 1; }
+.mcq-opt.wrong{
+  background:var(--hard-bg); border:2px solid var(--hard); color:var(--hard-ink); font-weight:700; opacity:1;
+  animation:wrongShake .5s cubic-bezier(.36,.07,.19,.97) both, wrongPulse 1.1s ease-out .5s 2;
+}
+.mcq-opt.wrong .k{ background:var(--hard); border-color:var(--hard); color:#fff; }
+.mcq-opt.wrong .tag{ background:var(--hard); }
+.mcq.is-wrong{ animation:cardFlash 1.2s ease-out; }
+@keyframes wrongShake{ 10%,90%{ transform:translateX(-2px); } 20%,80%{ transform:translateX(5px); } 30%,50%,70%{ transform:translateX(-8px); } 40%,60%{ transform:translateX(8px); } }
+@keyframes wrongPulse{ 0%{ box-shadow:0 0 0 0 rgba(181,65,50,.55); } 100%{ box-shadow:0 0 0 12px rgba(181,65,50,0); } }
+@keyframes rightGlow{ 0%{ box-shadow:0 0 0 0 rgba(62,114,89,.5); } 100%{ box-shadow:0 0 0 12px rgba(62,114,89,0); } }
+@keyframes rightPop{ 0%{ transform:scale(1); } 45%{ transform:scale(1.03); } 100%{ transform:scale(1); } }
+@keyframes statusPop{ 0%{ transform:scale(.4); opacity:0; } 100%{ transform:scale(1); opacity:1; } }
+@keyframes cardFlash{ 0%{ box-shadow:0 0 0 3px rgba(181,65,50,.55); background-color:var(--hard-bg); } 100%{ box-shadow:0 0 0 0 rgba(181,65,50,0); background-color:var(--card); } }
+.mcq-fb{ font-size:15px; line-height:1.8; margin:0 16px 14px; padding:8px 12px; background:var(--paper); border-left:4px solid var(--rule); border-radius:4px; }
+.mcq-fb[hidden]{ display:none; }
+.mcq.is-right .mcq-fb{ border-left-color:var(--easy); background:var(--easy-bg); }
+.mcq.is-wrong .mcq-fb{ border-left-color:var(--hard); background:var(--hard-bg); }
 .mcq-fb .v{ font-family:var(--kai); font-weight:700; margin-right:6px; }
 .mcq.is-right .mcq-fb .v{ color:var(--easy-ink); }
 .mcq.is-wrong .mcq-fb .v{ color:var(--hard-ink); }
 .mcq-fb a{ color:var(--link); font-family:var(--kai); margin-left:6px; }
 .mcq-done{ background:var(--ink); color:var(--paper); border-radius:6px; padding:14px 18px; font-family:var(--kai); font-size:18px; margin-top:12px; }
-@media (max-width:640px){ .mcq-opts{ grid-template-columns:1fr; } .mcq-tools{ position:static; } }
+@media (max-width:640px){
+  .mcq-opts{ grid-template-columns:1fr; }
+  .mcq-tools{ position:static; grid-template-columns:1fr 1fr; }
+  .mcq-score{ grid-column:1 / -1; }
+}
 @media print{ .review-nav,.mcq-tools{ display:none!important; } }
 
 /* =========================================================
@@ -655,7 +718,7 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
 @media print{
   html,body{ background:#fff!important; font-size:12pt; }
   body{ line-height:1.7; }
-  .intro-screen,.site-nav,.skip,.to-top,.tool-btns,.qtools,.btns,.pager,.term-card,.cite-pop,.mini-btn,.fbtn{ display:none!important; }
+  .intro-screen,.site-nav,.menu-panel,.skip,.to-top,.tool-btns,.qtools,.btns,.pager,.term-card,.cite-pop,.mini-btn,.fbtn{ display:none!important; }
   main > section[data-page]{ display:block!important; break-before:page; }
   main > section[data-page]:first-child{ break-before:auto; }
   main > section[data-page][hidden]{ display:block!important; }
@@ -708,17 +771,24 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
 <header class="site-nav" id="siteNav">
   <div class="nav-row">
     <a class="brand" href="#/home">古希臘羅馬宗教史</a>
-    <nav class="tab-wrap" aria-label="分頁">
-      <ul class="tabs" id="tabs">
-        <li><a href="#/home" data-tab="home">首頁</a></li>
-        <li><a href="#/t1" data-tab="t1"><span class="tn">一</span>神意與獻祭</a></li>
-        <li><a href="#/t2" data-tab="t2"><span class="tn">二</span>泛希臘宗教</a></li>
-        <li><a href="#/t3" data-tab="t3"><span class="tn">三</span>神話譜系</a></li>
-        <li><a href="#/t4" data-tab="t4"><span class="tn">四</span>奧林匹斯諸神</a></li>
-        <li><a href="#/t5" data-tab="t5"><span class="tn">五</span>史料與年代</a></li>
-        <li><a href="#/t6" data-tab="t6"><span class="tn">六</span>聖地與祭儀</a></li>
-        <li><a href="#/review" data-tab="review">複習</a></li>
-      </ul>
+    <nav class="menu-wrap" aria-label="分頁">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-haspopup="true">
+        <span class="sr-only">開啟分頁選單，目前在：</span><span class="menu-current" id="menuCurrent"><span class="tn"></span><span>首頁</span></span>
+        <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <div class="menu-panel" id="menuPanel" hidden>
+        <div class="menu-head" aria-hidden="true">分頁</div>
+        <ul class="tabs" id="tabs">
+          <li><a href="#/home" data-tab="home"><span class="tn"></span><span>首頁</span></a></li>
+          <li class="sep"><a href="#/t1" data-tab="t1"><span class="tn">一</span><span>神意與獻祭</span></a></li>
+          <li><a href="#/t2" data-tab="t2"><span class="tn">二</span><span>泛希臘宗教</span></a></li>
+          <li><a href="#/t3" data-tab="t3"><span class="tn">三</span><span>神話譜系</span></a></li>
+          <li><a href="#/t4" data-tab="t4"><span class="tn">四</span><span>奧林匹斯諸神</span></a></li>
+          <li><a href="#/t5" data-tab="t5"><span class="tn">五</span><span>史料與年代</span></a></li>
+          <li><a href="#/t6" data-tab="t6"><span class="tn">六</span><span>聖地與祭儀</span></a></li>
+          <li class="sep"><a href="#/review" data-tab="review"><span class="tn"></span><span>複習</span></a></li>
+        </ul>
+      </div>
     </nav>
   </div>
 </header>
@@ -738,8 +808,8 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
           <p class="hero-sub"><span>神意等待人的詮釋，祭儀維繫人神的往來。</span><span>從色諾芬的祭壇出發，走進古希臘羅馬的宗教世界。</span></p>
           <dl class="hero-meta">
             <dt>學期</dt><dd>115 學年度第 1 學期</dd>
-            <dt>版本</dt><dd>課程筆記 v3</dd>
-            <dt>最後更新</dt><dd>2026 年 10 月 19 日</dd>
+            <dt>版本</dt><dd>課程筆記 v4</dd>
+            <dt>最後更新</dt><dd>2026 年 10 月 22 日</dd>
           </dl>
           <div class="hero-about">
             <p>這是一份古希臘羅馬宗教史的重點課程筆記，依主題整理核心概念、重要案例、關鍵詞與史料脈絡。內容從色諾芬《遠征記》中的神意、占卜、獻祭與十分之一奉獻開始，延伸至泛希臘宗教體系、神話譜系的形成與神話的不同版本、奧林匹斯眾神、研究古希臘羅馬宗教所使用的史料與方法，以及宗教聖地（Temenos）、聖樹與聖水、神聖與世俗、祭壇、神廟與神像、倒酒等祭儀空間與實踐。另整理容易混淆的概念、重要細節、作答提醒與模擬題目，方便平時複習、理解脈絡與考前統整。</p>
@@ -3127,11 +3197,13 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
   </div>
 
   <h2 style="font-size:28px;margin:40px 0 6px" id="mcq" tabindex="-1">互動測驗</h2>
-  <p class="qnote" style="margin-top:0">選一個答案後會立刻顯示對錯與解析；全部答完會出現分數。按「重新測驗」會打亂題目順序再來一次。</p>
+  <p class="qnote" style="margin-top:0">選一個答案後會立刻顯示對錯與解析：答錯時你選的選項會晃動並以紅色標出，正解以綠色標示。卡片顏色代表題目所屬主題：藍色是三　神話譜系，銅色是六　聖地與祭儀。全部答完會出現分數；按「重新測驗」會打亂題目順序再來一次。</p>
   <div class="mcq-tools">
     <span class="mcq-score" id="mcqScore" aria-live="polite"></span>
     <button type="button" class="mini-btn" id="mcqWrong" aria-pressed="false">只看答錯的題目</button>
     <button type="button" class="mini-btn" id="mcqReset">重新測驗</button>
+    <div class="mcq-bar" id="mcqBar" aria-hidden="true"><i class="b-right"></i><i class="b-wrong"></i></div>
+    <div class="mcq-legend" aria-hidden="true"><span><i style="--c:var(--easy)"></i>答對</span><span><i style="--c:var(--hard)"></i>答錯</span><span><i style="--c:var(--paper2);border:1px solid var(--rule)"></i>未作答</span><span><i style="--c:var(--slate)"></i>三　神話譜系</span><span><i style="--c:var(--bronze)"></i>六　聖地與祭儀</span></div>
   </div>
   <ol class="mcq-list" id="mcqList"></ol>
 
@@ -3221,7 +3293,7 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
   </div>
 </section>
 
-<footer class="site-foot">古希臘羅馬宗教史・課程筆記（v3）｜2026 年 10 月 19 日｜陳宥宏</footer>
+<footer class="site-foot">古希臘羅馬宗教史・課程筆記（v4）｜2026 年 10 月 22 日｜陳宥宏</footer>
 
 <button type="button" class="to-top" id="toTop" aria-label="回到頂端" hidden>↑</button>
 
@@ -3465,7 +3537,7 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
     if (skip) skip.setAttribute('href', '#/' + id);
     setTitle(id);
     currentPage = id;
-    scrollActiveTab();
+    syncMenuLabel(id);
   }
 
   function afterLayout(fn) { requestAnimationFrame(() => requestAnimationFrame(fn)); }
@@ -3501,20 +3573,56 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
     const m = ROUTE_RE.exec(hash);
     if (!m) { location.replace('#/home'); return; }
     const page = m[1], sid = m[2];
-        showPage(page);
+    closeMenu(false);
+    showPage(page);
     closeTerm(); hideCite(true);
     if (sid) goToSection(page, sid);
     else focusPageTop(page);
   }
 
   /* ---------- Navigation ---------- */
-  function scrollActiveTab() {
-    const list = $('#tabs');
-    const act = list && list.querySelector('a[aria-current="page"]');
-    if (!list || !act || list.scrollWidth <= list.clientWidth) return;
-    const li = act.parentElement;
-    const left = li.offsetLeft - (list.clientWidth - li.offsetWidth) / 2;
-    list.scrollTo({ left: Math.max(0, left), behavior: reduceMotion ? 'auto' : 'smooth' });
+  /* v4：右上角下拉選單 */
+  function syncMenuLabel(id) {
+    const cur = $('#menuCurrent');
+    const a = $('#tabs a[data-tab="' + id + '"]');
+    if (cur && a) cur.innerHTML = a.innerHTML;
+  }
+  function openMenu() {
+    const btn = $('#menuBtn'), panel = $('#menuPanel');
+    if (!btn || !panel) return;
+    closeTerm(); hideCite(true);
+    panel.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    const act = panel.querySelector('a[aria-current="page"]') || panel.querySelector('a');
+    if (act) act.focus({ preventScroll: true });
+  }
+  function closeMenu(refocus) {
+    const btn = $('#menuBtn'), panel = $('#menuPanel');
+    if (!btn || !panel || panel.hidden) return;
+    panel.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    if (refocus) btn.focus({ preventScroll: true });
+  }
+  function initMenu() {
+    const btn = $('#menuBtn'), panel = $('#menuPanel');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (panel.hidden) openMenu(); else closeMenu(false);
+    });
+    document.addEventListener('click', e => {
+      if (!panel.hidden && !e.target.closest('#menuPanel') && !e.target.closest('#menuBtn')) closeMenu(false);
+    });
+    panel.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(false); });
+    panel.addEventListener('keydown', e => {
+      const links = $$('a', panel);
+      const i = links.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') { e.preventDefault(); links[(i + 1) % links.length].focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); links[(i - 1 + links.length) % links.length].focus(); }
+      else if (e.key === 'Home') { e.preventDefault(); links[0].focus(); }
+      else if (e.key === 'End') { e.preventDefault(); links[links.length - 1].focus(); }
+      else if (e.key === 'Tab' && ((e.shiftKey && i === 0) || (!e.shiftKey && i === links.length - 1))) closeMenu(false);
+    });
   }
 
   /* ---------- Topic Pages：展開／收合 ---------- */
@@ -3765,15 +3873,19 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
     return a;
   }
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function mcqTopic(q) { const m = /^#\/(t\d)/.exec(q.r); return m ? m[1] : 't6'; }
   function renderMcq(randomize) {
     const list = $('#mcqList');
     if (!list) return;
     mcqOrder = randomize ? shuffle(MCQ.map((_, i) => i)) : MCQ.map((_, i) => i);
     mcqDone = {};
-    list.innerHTML = mcqOrder.map(qi => {
-      const q = MCQ[qi];
-      const opts = q.o.map((o, k) => '<button type="button" class="mcq-opt" data-q="' + qi + '" data-k="' + k + '"><span class="k">' + MCQ_KEYS[k] + '</span><span>' + esc(o) + '</span></button>').join('');
-      return '<li class="mcq" id="mcq-' + qi + '"><p class="mcq-q"><span>' + esc(q.q) + '</span></p><div class="mcq-opts" role="group" aria-label="選項">' + opts + '</div><div class="mcq-fb" aria-live="polite" hidden></div></li>';
+    list.innerHTML = mcqOrder.map((qi, pos) => {
+      const q = MCQ[qi], t = mcqTopic(q);
+      const opts = q.o.map((o, k) => '<button type="button" class="mcq-opt" data-q="' + qi + '" data-k="' + k + '"><span class="k">' + MCQ_KEYS[k] + '</span><span>' + esc(o) + '</span><span class="tag"></span></button>').join('');
+      return '<li class="mcq t-' + t + '" id="mcq-' + qi + '">' +
+        '<div class="mcq-head"><span class="mcq-no">' + (pos + 1) + '</span><span class="mcq-topic">' + TOPIC_LABEL[t] + '</span><span class="mcq-status" hidden></span></div>' +
+        '<p class="mcq-q">' + esc(q.q) + '</p><div class="mcq-opts" role="group" aria-label="選項">' + opts + '</div>' +
+        '<div class="mcq-fb" aria-live="polite" hidden></div></li>';
     }).join('');
     const wrongBtn = $('#mcqWrong');
     if (wrongBtn) { wrongBtn.setAttribute('aria-pressed', 'false'); wrongBtn.textContent = '只看答錯的題目'; }
@@ -3783,7 +3895,13 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
     const box = $('#mcqScore');
     const n = Object.keys(mcqDone).length;
     const right = Object.values(mcqDone).filter(Boolean).length;
-    if (box) box.innerHTML = '已作答 ' + n + '／' + MCQ.length + ' 題，答對 <b>' + right + '</b> 題';
+    const wrong = n - right;
+    if (box) box.innerHTML = '已作答 ' + n + '／' + MCQ.length + ' 題：答對 <b class="r">' + right + '</b>、答錯 <b class="w">' + wrong + '</b>';
+    const bar = $('#mcqBar');
+    if (bar) {
+      bar.querySelector('.b-right').style.width = (right / MCQ.length * 100) + '%';
+      bar.querySelector('.b-wrong').style.width = (wrong / MCQ.length * 100) + '%';
+    }
     const list = $('#mcqList');
     const old = $('#mcqDoneMsg');
     if (old) old.remove();
@@ -3808,12 +3926,16 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
       $$('.mcq-opt', li).forEach(x => {
         x.disabled = true;
         const xk = Number(x.dataset.k);
-        if (xk === q.a) x.classList.add('right');
-        else if (xk === k) x.classList.add('wrong');
+        if (xk === q.a) { x.classList.add('right'); x.querySelector('.tag').textContent = ok ? '你答對了' : '正解'; }
+        else if (xk === k) { x.classList.add('wrong'); x.querySelector('.tag').textContent = '你的選擇'; }
+        else x.classList.add('dim');
       });
       li.classList.add(ok ? 'is-right' : 'is-wrong');
+      const st = $('.mcq-status', li);
+      st.textContent = ok ? '✓ 答對' : '✗ 答錯';
+      st.hidden = false;
       const fb = $('.mcq-fb', li);
-      fb.innerHTML = '<span class="v">' + (ok ? '答對了。' : '正解是 ' + MCQ_KEYS[q.a] + '。') + '</span>' + esc(q.e) + '<a href="' + q.r + '">回到正文</a>';
+      fb.innerHTML = '<span class="v">' + (ok ? '答對了。' : '答錯了，正解是 ' + MCQ_KEYS[q.a] + '。') + '</span>' + esc(q.e) + '<a href="' + q.r + '">回到正文</a>';
       fb.hidden = false;
       mcqDone[qi] = ok;
       updateMcqScore();
@@ -3860,6 +3982,8 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
     });
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
+        const mp = $('#menuPanel');
+        if (mp && !mp.hidden) { closeMenu(true); return; }
         if (openTermBtn) { const b = openTermBtn; closeTerm(); b.focus(); }
         hideCite(true);
       }
@@ -3914,6 +4038,7 @@ html.intro-lock, html.intro-lock body{ overflow:hidden; }
   }
 
   /* ---------- Init ---------- */
+  initMenu();
   initToggles();
   initTimeline();
   initTerms();
